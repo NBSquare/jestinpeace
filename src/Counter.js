@@ -45,7 +45,6 @@ export default function Counter() {
     fetch(`/api/exchange`, params)
       .then(response => response.json())
       .then(json => {
-        console.log(json);
         formConnection(json.accessToken);
       })
       .catch(e => {
