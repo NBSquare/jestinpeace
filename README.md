@@ -11,7 +11,7 @@ A basic create-react-app application with a login and monitoring page.
 
 ## Environment Variables
 There are a few environment variables necessary to get this application working:
-- CLIENT_ID / REACT_APP_CLIENT_ID: The ID of the Restream.io application.
-- CLIENT_SECRET: The secret for the application.
-- REACT_APP_REDIRECT_URI: The redirect URI for the application.
-- REACT_APP_CSRF: A random token to prevent CSRF attacks.
+- `CLIENT_ID / REACT_APP_CLIENT_ID`: The ID of the Restream.io application.
+- `CLIENT_SECRET`: The secret for the application.
+- `REACT_APP_REDIRECT_URI`: The redirect URI for the application.
+- `REACT_APP_CSRF`: A random token to prevent CSRF attacks.
