@@ -4,11 +4,17 @@ import { useLocation } from 'react-router-dom';
 
 export default function Counter() {
   const [errorMessage, setErrorMessage] = useState('');
-  const [messages, setMessages] = useState(0);
+  const [liveVotes, setLiveVotes] = useState(0);
+  const [deathVotes, setDeathVotes] = useState(0);
 
   const query = new URLSearchParams(useLocation().search);
   const state = query.get('state');
   const code = query.get('code');
+
+  const resetVotes = () => {
+    setLiveVotes(0);
+    setDeathVotes(0);
+  }
 
   const formConnection = (accessToken) => {
     const url = `wss://chat.api.restream.io/ws?accessToken=${accessToken}`;
@@ -18,11 +24,19 @@ export default function Counter() {
 
     connection.onmessage = (message) => {
       const action = JSON.parse(message.data);
-      console.log(action);
 
-      // if (action['action'] === 'event' && action['payload']['text']) {
-      setMessages(messages => messages + 1);
-      // }
+      if (action['action'] === 'event') {
+        const text = action['payload']['eventPayload']['text'];
+        if (text) {
+          if (text.match(/kill/i)) {
+            setDeathVotes(deathVotes => deathVotes + 1);
+          }
+
+          if (text.match(/spare/i)) {
+            setLiveVotes(liveVotes => liveVotes + 1);
+          }
+        }
+      }
     };
   }
 
@@ -54,11 +68,13 @@ export default function Counter() {
   }, [state, code]);
 
   return errorMessage === '' ? (
-    <div>
-      <h1>There are {messages} messages.</h1>
+    <div className="container">
+      <h1>There are {deathVotes} KILL votes.</h1>
+      <h1>There are {liveVotes} LIVE votes</h1>
+      <button onClick={resetVotes}>Reset Votes</button>
     </div>
   ) : (
-    <div>
+    <div className="container">
       <h1>There was an error handling the stream chat connection. You can try logging back in.</h1>
       <Auth />
     </div>
