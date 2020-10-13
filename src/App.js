@@ -15,7 +15,9 @@ export default function App() {
     <Router>
       <Switch>
         <Route exact path="/">
-          <Auth />
+          <div className="container">
+            <Auth />
+          </div>
         </Route>
         <Route path="/counter">
           <Counter />

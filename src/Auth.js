@@ -11,7 +11,7 @@ export default function Auth() {
 
   return (
     <button onClick={() => window.open(getAuthHref(), '_self')}>
-      Log In
+      Authenticate with Restream
     </button>
   )
 }
